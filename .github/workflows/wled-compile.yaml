@@ -24,14 +24,14 @@ jobs:
       run: |
         rm -rf /tmp/WLEDtemp/* || true
         mkdir -p /tmp/WLEDtemp
-        wget https://api.github.com/repos/Aircoookie/WLED/zipball/v0.15.0-b6 -O /tmp/WLEDtemp/mm.zip
+        wget https://api.github.com/repos/Aircoookie/WLED/zipball/v0.14.4 -O /tmp/WLEDtemp/mm.zip
         unzip /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
         find /tmp/WLEDtemp -maxdepth 1 -mindepth 1 -name "*" -type d >> /tmp/WLEDtemp/wledfoldername
         cd `cat /tmp/WLEDtemp/wledfoldername`
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32c3dev' >>platformio.ini
-        echo 'build_flags = ${env:esp32c3dev.build_flags} -D CLIENT_SSID='\''"coldfire"'\'' -D CLIENT_PASS='\''"qazwsxedc"'\'' ${esp32.AR_build_flags}' >>platformio.ini
+        echo 'build_flags = ${env:esp32c3dev.build_flags} ${esp32.AR_build_flags}' >>platformio.ini
         echo 'lib_deps = ' >>platformio.ini
         echo '  ${env:esp32c3dev.lib_deps}' >>platformio.ini
         echo '  ${esp32.AR_lib_deps}' >>platformio.ini
